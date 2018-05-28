@@ -4,45 +4,37 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Date;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-public class Server
-{
+public class Server {
     private int port;
     private String htmlPath;
 
-    public int getPort()
-    {
-      return port;
+    public int getPort() {
+        return port;
     }
 
-    public String getHtmlPath()
-    {
+    public String getHtmlPath() {
         return htmlPath;
     }
 
-    public void setPort(int port)
-    {
+    public void setPort(int port) {
         this.port = port;
     }
 
-    public void setHtmlPath(String htmlPath)
-    {
+    public void setHtmlPath(String htmlPath) {
         this.htmlPath = htmlPath;
     }
 
-    public void runServer() throws IOException
+    public void start() throws IOException
     {
         ServerSocket server = new ServerSocket(8090);
-        while(true){
-            try(Socket client = server.accept()){
-                DataOutputStream out = new DataOutputStream(client.getOutputStream());
-                byte[] encoded = Files.readAllBytes(Paths.get("C:/Projects/123.html"));
-                String html = new String(encoded);
-                out.writeBytes("HTTP/1.1 200 OK\r\n");
-                out.writeBytes("Content-Type: text/html\r\n\r\n");
-                out.writeBytes(html);
-            }
+        ExecutorService pool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() + 1);
+        while (true) {
+           Socket client = server.accept();
+           SocketProcessor thread = new SocketProcessor(client);
+           pool.execute(thread);
         }
     }
 }
