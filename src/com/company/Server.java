@@ -1,7 +1,9 @@
 package com.company;
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Date;
 
 public class Server
@@ -31,12 +33,15 @@ public class Server
 
     public void runServer() throws IOException
     {
-        ServerSocket server = new ServerSocket(8080);
+        ServerSocket server = new ServerSocket(8090);
         while(true){
             try(Socket client = server.accept()){
-                Date today = new Date();
-                String httpResponse = "HTTP/1.1 200 OK\r\n\r\n" + today;
-                client.getOutputStream().write(httpResponse.getBytes("UTF-8"));
+                DataOutputStream out = new DataOutputStream(client.getOutputStream());
+                byte[] encoded = Files.readAllBytes(Paths.get("C:/Projects/123.html"));
+                String html = new String(encoded);
+                out.writeBytes("HTTP/1.1 200 OK\r\n");
+                out.writeBytes("Content-Type: text/html\r\n\r\n");
+                out.writeBytes(html);
             }
         }
     }
