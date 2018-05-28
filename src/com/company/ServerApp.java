@@ -1,8 +1,12 @@
 package com.company;
 
-public class ServerApp {
+import java.io.IOException;
 
-    public static void main(String[] args) {
-
+public class ServerApp
+{
+    public static void main(String[] args) throws IOException
+    {
+        Server server = new Server();
+        server.runServer();
     }
 }
