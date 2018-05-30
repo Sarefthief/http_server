@@ -20,5 +20,5 @@ java -jar path_to_directory\out\artifacts\http_server\http_server.jar
 
 ### Instructions:
 
-1. Run jar file.
+1. Relocate jar file into project's root folder and run it.
 2. Open http://localhost:8080 in your browser (port number and html file path can be changed in config.yml file)
