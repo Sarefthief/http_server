@@ -1,5 +1,4 @@
 package com.company;
-
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -10,18 +9,20 @@ import java.nio.file.Paths;
 public class SocketProcessor implements Runnable
 {
     private OutputStream outputStream;
+    private String htmlPath;
 
-    public SocketProcessor(Socket client) throws IOException
+    public SocketProcessor(Socket client, String htmlPath) throws IOException
     {
+        this.htmlPath = htmlPath;
         this.outputStream = client.getOutputStream();
-        System.out.println("Поток создан");
+        System.out.println("Сonnection established");
     }
 
     public void run()
     {
         try{
             DataOutputStream out = new DataOutputStream(outputStream);
-            byte[] content = Files.readAllBytes(Paths.get("response.html"));
+            byte[] content = Files.readAllBytes(Paths.get(htmlPath));
             String html = new String(content);
             out.writeBytes("HTTP/1.1 200 OK\r\n");
             out.writeBytes("Content-Type: text/html\r\n\r\n");
@@ -30,6 +31,5 @@ public class SocketProcessor implements Runnable
         } catch (IOException e){
             System.out.println("Exception");
         }
-
     }
 }
