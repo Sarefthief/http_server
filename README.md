@@ -9,9 +9,9 @@ cd path_to_directory\http_server\scr\com\company
 ```
 3. Build jar file:
 ```
-javac DirectoryScanner.java
+javac ServerApp.java
 
-jar cfm DirectoryScanner.jar path_to_directory\http_serverr\scr\META-INF\MANIFEST.MF DirectoryScanner.class
+jar cfm http_server.jar path_to_directory\http_serverr\scr\META-INF\MANIFEST.MF ServerApp.class
 ```
 4. Run jar file:
 ```
