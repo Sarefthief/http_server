@@ -3,7 +3,6 @@ import java.io.*;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -48,7 +47,9 @@ public class Server {
         try{
             ServerSocket server = new ServerSocket(port);
             ExecutorService pool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() + 1);
-            System.out.println("Port number: " + port);
+            ExitThread exit = new ExitThread();
+            pool.execute(exit);
+            System.out.println("Port number: " + port +". Type \"exit\" to close the server.");
             while(true) {
                 Socket client = server.accept();
                 SocketProcessor thread = new SocketProcessor(client, htmlPath);
