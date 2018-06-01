@@ -3,7 +3,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import java.io.File;
 import java.io.IOException;
-import java.net.BindException;
+import java.util.Scanner;
 
 public class ServerApp
 {
@@ -12,5 +12,6 @@ public class ServerApp
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         Server server = mapper.readValue(new File("config.yml"), Server.class);
         server.start();
+
     }
 }
