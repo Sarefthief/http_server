@@ -34,7 +34,7 @@ public class SocketProcessor implements Runnable
                 if (s.contains("text")){
                     System.out.println("Connection established");
                 }
-                if(s == null || s.trim().length() == 0) {
+                if(s.equals("") || s.trim().length() == 0) {
                     break;
                 }
             }
