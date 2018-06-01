@@ -11,6 +11,11 @@ public class SocketProcessor implements Runnable
     private OutputStream outputStream;
     private String htmlPath;
 
+    /**
+     * @param client client socket
+     * @param htmlPath string path to html response file
+     * @throws IOException
+     */
     public SocketProcessor(Socket client, String htmlPath) throws IOException
     {
         this.htmlPath = htmlPath;
