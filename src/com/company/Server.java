@@ -1,5 +1,6 @@
 package com.company;
 import java.io.*;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
@@ -43,13 +44,17 @@ public class Server {
      */
     public void start() throws IOException
     {
-        ServerSocket server = new ServerSocket(port);
-        ExecutorService pool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() + 1);
-        System.out.println("Port number: " + port);
-        while(true) {
-            Socket client = server.accept();
-            SocketProcessor thread = new SocketProcessor(client, htmlPath);
-            pool.execute(thread);
+        try{
+            ServerSocket server = new ServerSocket(port);
+            ExecutorService pool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() + 1);
+            System.out.println("Port number: " + port);
+            while(true) {
+                Socket client = server.accept();
+                SocketProcessor thread = new SocketProcessor(client, htmlPath);
+                pool.execute(thread);
+            }
+        } catch(BindException e){
+            System.out.println("Port: " + port + " is unavailable. Please change port number in config.yml file.");
         }
     }
 }

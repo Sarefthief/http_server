@@ -23,6 +23,9 @@ public class SocketProcessor implements Runnable
         System.out.println("Сonnection established");
     }
 
+    /**
+     * http response
+     */
     public void run()
     {
         try{
